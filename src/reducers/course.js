@@ -2,7 +2,6 @@ const ADD_TEACHER = 'ADD_TEACHER'
 const REMOVE_TEACHER = 'REMOVE_TEACHER'
 const ADD_COURSES = 'ADD_COURSES'
 
-
 const courses = (state = [], action) => {
   switch (action.type) {
     case 'ADD_COURSE':

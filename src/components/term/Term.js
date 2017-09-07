@@ -9,9 +9,9 @@ const CoursesOfTerm = ({courses, year, term}) => {
       <h1>Kurssit {term} {year} </h1>
       <Table>
          <tbody>
-        {courses.map( course => 
-          <CourseRow course={course} key={course.id}/>
-        )}
+          {courses.map( course => 
+            <CourseRow course={course} key={course.id}/>
+          )}
         </tbody>
       </Table>
     </div>

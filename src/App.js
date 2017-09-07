@@ -1,6 +1,7 @@
 import './App.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 import { Term } from './components/term'
 import { getTeachers, getReservations, getAllCourses } from './services'
 import { addTeacher, removeTeacher, addCourses } from './reducers/course'
@@ -11,55 +12,41 @@ class App extends Component {
   componentWillMount() {
     getAllCourses()  
     .then( data => {
-      this.context.store.dispatch(addCourses(data))
+      //this.context.store.dispatch(addCourses(data))
+      this.props.addCourses(data)
     }) 
 
     getTeachers()  
     .then( data => {
-      this.context.store.dispatch({
-        type: 'ADD_TEACHERS', 
-        data: data
-      })
+      this.props.addTeachers(data)
     }) 
 
     getReservations()  
     .then( data => {
-      this.context.store.dispatch({
-        type: 'ADD_RESERVATIONS', 
-        data: data
-      })
+      this.props.addReservations(data)
     })       
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.context.store.subscribe(() =>
-      this.forceUpdate()
-    );
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe(); 
-  }
-
   getCourses = () => {
-    return this.context.store.getState().courses
+    return this.props.courses
   }
 
   removeTeacher = (who, course_id, group_nro) => {
     return () => {
-      this.context.store.dispatch(removeTeacher(who, course_id, group_nro))
+      this.props.removeTeacher(who, course_id, group_nro)
+      //this.context.store.dispatch(removeTeacher(who, course_id, group_nro))
     }
   }
 
   selectTeacher = (who, course_id, group_nro) => {
-    this.context.store.dispatch(addTeacher(who, course_id, group_nro))  
+    this.props.addTeacher(who, course_id, group_nro)
+    //this.context.store.dispatch(addTeacher(who, course_id, group_nro))  
   }
 
   render() {
-    const courses = this.getCourses()
     return (
       <Term      
-        courses={courses} 
+        courses={this.props.courses} 
         year={2017} 
         term={'Syksy'}
         onRemoveTeacher={this.removeTeacher}
@@ -69,8 +56,7 @@ class App extends Component {
   }
 }
 
-App.contextTypes = {
-  store: PropTypes.object
-}
-
-export default App
+export default connect(
+  (state) => ({courses: state.courses}),
+  { addTeacher, removeTeacher, addCourses, addTeachers, addReservations }
+)(App)

@@ -11,7 +11,7 @@ const teachers = (state = [], action) => {
   }
 }
 
-export const addReservations = (data) => {
+export const addTeachers = (data) => {
   return {
     type: ADD_TEACHERS, 
     data: data
