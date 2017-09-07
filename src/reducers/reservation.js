@@ -1,12 +1,21 @@
+const ADD_RESERVATIONS = 'ADD_RESERVATIONS'
+
 const reservatios = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_RESERVATION':
       return {}
-    case 'ADD_RESERVATIONS':
+    case ADD_RESERVATIONS:
       return action.data
 
     default:
       return state
+  }
+}
+
+export const addReservations = (data) => {
+  return {
+    type: ADD_RESERVATIONS, 
+    data: data
   }
 }
 
