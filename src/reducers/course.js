@@ -16,7 +16,9 @@ const courses = (state = [], action) => {
       let group = modifiedCourse.groups.find(g => g.nro===group_nro)
       group.teachers = []
 
-      return courses.concat(modifiedCourse) 
+      console.log("REMOVE_REDUCER")
+
+      return state.filter(c => c.id!==course_id).concat(modifiedCourse) 
     }
     case ADD_TEACHER: {
       const {who, course_id, group_nro} = action.data

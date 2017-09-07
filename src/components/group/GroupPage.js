@@ -1,5 +1,5 @@
 import React from 'react';
-import {GroupsTeacher} from './GroupsTeacher'
+import GroupsTeacher from './GroupsTeacher'
 import {GroupsRoom} from './GroupsRoom'
 
 export const GroupPage = ({group, course, onRemoveTeacher, onSelectTeacher}) => {
@@ -14,8 +14,6 @@ export const GroupPage = ({group, course, onRemoveTeacher, onSelectTeacher}) => 
       <GroupsTeacher 
         group={group} 
         course={course}
-        onRemoveTeacher={onRemoveTeacher}
-        onSelectTeacher={onSelectTeacher}
       />
     </div>)
 }

@@ -13,8 +13,6 @@ export const Groups = ({groups, course, onRemoveTeacher, onSelectTeacher}) => {
               key={group.nro+group.alkamis_pvm} 
               group={group} 
               course={course}
-              onRemoveTeacher={onRemoveTeacher}
-              onSelectTeacher={onSelectTeacher}
             />
           )}
         </tbody>

@@ -1,50 +1,49 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { addTeacher, removeTeacher } from '../../reducers/course'
+import { withRouter } from 'react-router'
 
-export class GroupsTeacher extends Component {
-  constructor() {
-    super()
-    this.state = {
-      input: ""
-    }
-    this.textEntered = this.textEntered.bind(this)
-    this.selectTeacher = this.selectTeacher.bind(this)
+class GroupsTeacher extends Component {
+  state = {
+    input: ""
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.context.store.subscribe(() =>
-      this.forceUpdate()
-    );
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe(); 
-  }
-
-  textEntered(event) {
+  textEntered = (event) => {
     event.preventDefault()
     this.setState({
       input: event.target.value
     })
   }
 
-  selectTeacher(teacher) {
-    const {group, course, onSelectTeacher} = this.props
+  onSelectTeacher = (teacher) => {
+    const {group, course, addTeacher} = this.props
     return () => {
-      this.setState({
-        input: ""
-      })
-      onSelectTeacher(teacher, course.id, group.nro)      
+      this.setState({ input: "" })
+      addTeacher(teacher, course.id, group.nro)      
+    }
+  }
+
+  onRemoveTeacher = (who, course_id, group_nro) => {
+    return () => {
+      this.setState({ input: "" })
+      this.props.removeTeacher(who, course_id, group_nro)
     }
   }
 
   render() {
-    const {group, course, onRemoveTeacher} = this.props
-    const teachers = this.context.store.getState().teachers
+    const {group, course} = this.props
+    const teachers = this.props.teachers
     const teacher = group.teachers.length>0 ? group.teachers[0] : {}
 
     const match = (t, input) => {
+
+      // a hack fixing a bit unknown bug appearing in teacher selection
+      // that happens after teacher removal
+      if (t.nimi === undefined) {
+        return false
+      }
+
       return t.nimi.toLowerCase().indexOf(input.toLowerCase())>-1
     }
 
@@ -63,7 +62,8 @@ export class GroupsTeacher extends Component {
             {matchingTeachers().map(t => 
               <li key={t.htunnus}>
                 {t.nimi}
-                <Button color="primary" onClick={this.selectTeacher(t)}>valitse</Button>
+                <Button color="primary" 
+                        onClick={this.onSelectTeacher(t)}>valitse</Button>
               </li>)}
           </ul>
         </div>
@@ -75,8 +75,7 @@ export class GroupsTeacher extends Component {
           <p>
             {teacher.nimi}
             <Button color="warning" 
-                    onClick={onRemoveTeacher(teacher.htunnus, course.id, group.nro)}
-            >
+                    onClick={this.onRemoveTeacher(teacher.htunnus, course.id, group.nro)}>
               poista
             </Button>
           </p>      
@@ -85,6 +84,8 @@ export class GroupsTeacher extends Component {
   }
 } 
 
-GroupsTeacher.contextTypes = {
-  store: PropTypes.object
-} 
+
+export default withRouter(connect(
+  (state) => ({teachers: state.teachers}),
+  { addTeacher, removeTeacher }
+)(GroupsTeacher))

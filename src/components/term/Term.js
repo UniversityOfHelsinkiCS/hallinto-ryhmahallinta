@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Table } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { CoursePage } from '../course';
 
 const CoursesOfTerm = ({courses, year, term}) => { 
@@ -29,7 +31,7 @@ const CourseRow = ({course}) => (
   </tr>
 ) 
 
-export const Term = ({courses, year, term, onRemoveTeacher, onSelectTeacher}) => {
+const Term = ({courses, year, term, onRemoveTeacher, onSelectTeacher}) => {
     const courseById = (id) => courses.find( course => course.id === id )
     return (   
       <Container>
@@ -39,10 +41,12 @@ export const Term = ({courses, year, term, onRemoveTeacher, onSelectTeacher}) =>
           <Route path='/courses/:id' render={({match}) => 
             <CoursePage 
               course={courseById(match.params.id)} 
-              onRemoveTeacher={onRemoveTeacher}
-              onSelectTeacher={onSelectTeacher}
             /> 
           }/>        
       </Container>
   )
 }
+
+export default withRouter(connect(
+  (state) => ({ courses: state.courses})
+)(Term)) 

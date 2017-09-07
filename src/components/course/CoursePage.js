@@ -27,8 +27,6 @@ export const CoursePage = ({course, onRemoveTeacher, onSelectTeacher}) => {
         <GroupPage 
           course={course} 
           group={groupWithId(match.params.group_id)}
-          onRemoveTeacher={onRemoveTeacher}
-          onSelectTeacher={onSelectTeacher}
         />
       }/> 
     </div>

@@ -1,10 +1,10 @@
 import './App.css'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import { Term } from './components/term'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import  Term from './components/term/Term'
 import { getTeachers, getReservations, getAllCourses } from './services'
-import { addTeacher, removeTeacher, addCourses } from './reducers/course'
+import { addCourses } from './reducers/course'
 import { addTeachers } from './reducers/teacher'
 import { addReservations } from './reducers/reservation'
 
@@ -12,7 +12,6 @@ class App extends Component {
   componentWillMount() {
     getAllCourses()  
     .then( data => {
-      //this.context.store.dispatch(addCourses(data))
       this.props.addCourses(data)
     }) 
 
@@ -31,32 +30,14 @@ class App extends Component {
     return this.props.courses
   }
 
-  removeTeacher = (who, course_id, group_nro) => {
-    return () => {
-      this.props.removeTeacher(who, course_id, group_nro)
-      //this.context.store.dispatch(removeTeacher(who, course_id, group_nro))
-    }
-  }
-
-  selectTeacher = (who, course_id, group_nro) => {
-    this.props.addTeacher(who, course_id, group_nro)
-    //this.context.store.dispatch(addTeacher(who, course_id, group_nro))  
-  }
-
   render() {
     return (
-      <Term      
-        courses={this.props.courses} 
-        year={2017} 
-        term={'Syksy'}
-        onRemoveTeacher={this.removeTeacher}
-        onSelectTeacher={this.selectTeacher}
-      />
+      <Term year={2017} term={'Syksy'}/>
     )
   }
 }
 
-export default connect(
+export default withRouter(connect(
   (state) => ({courses: state.courses}),
-  { addTeacher, removeTeacher, addCourses, addTeachers, addReservations }
-)(App)
+  { addCourses, addTeachers, addReservations }
+)(App))
