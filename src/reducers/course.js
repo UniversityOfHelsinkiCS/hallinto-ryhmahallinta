@@ -1,4 +1,4 @@
-import { getTeachers } from '../services'
+import { getAllCourses } from '../services'
 
 const ADD_TEACHER = 'ADD_TEACHER'
 const REMOVE_TEACHER = 'REMOVE_TEACHER'
@@ -14,8 +14,9 @@ const courses = (state = [], action) => {
     
       let modifiedCourse = state.find(c => c.id===course_id)
       let group = modifiedCourse.groups.find(g => g.nro===group_nro)
-      group.teachers = []
-      return state.filter(c => c.id!==course_id).concat(modifiedCourse) 
+      group.teachers = group.teachers.filter( t => t.htunnus!==who )
+      
+      return courses.concat(modifiedCourse) 
     }
     case ADD_TEACHER: {
       const {who, course_id, group_nro} = action.data
@@ -24,7 +25,7 @@ const courses = (state = [], action) => {
       
       let modifiedCourse = state.find(c => c.id===course_id)
       let group = modifiedCourse.groups.find(g => g.nro===group_nro)
-      group.teachers = [who]
+      group.teachers.push(who)
 
       return courses.concat(modifiedCourse)   
     }
@@ -51,7 +52,7 @@ export const removeTeacher = (who, course_id, group_nro) => {
   }
 }
 
-export const addCourses = (data) => {
+const addCourses = (data) => {
   return {
     type: ADD_COURSES, 
     data: data
@@ -59,11 +60,8 @@ export const addCourses = (data) => {
 }
 
 export const fetchCourses = () => {
-  //console.log('fetch')
   return (dispatch) => {
-    //console.log('metodissa')
-    getTeachers()
-      .then(courses => dispatch(addCourses(courses)))
+    getAllCourses().then(courses => dispatch(addCourses(courses)))
   }
 }
 

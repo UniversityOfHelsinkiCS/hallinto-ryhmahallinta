@@ -1,3 +1,5 @@
+import { getReservations } from '../services'
+
 const ADD_RESERVATIONS = 'ADD_RESERVATIONS'
 
 const reservatios = (state = {}, action) => {
@@ -12,10 +14,16 @@ const reservatios = (state = {}, action) => {
   }
 }
 
-export const addReservations = (data) => {
+const addReservations = (data) => {
   return {
     type: ADD_RESERVATIONS, 
     data: data
+  }
+}
+
+export const fetchReservations = () => {
+  return (dispatch) => {
+    getReservations().then(teachers => dispatch(addReservations(teachers)))
   }
 }
 

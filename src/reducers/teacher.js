@@ -1,3 +1,5 @@
+import { getTeachers } from '../services'
+
 const ADD_TEACHERS = 'ADD_TEACHERS'
 
 const teachers = (state = [], action) => {
@@ -9,7 +11,7 @@ const teachers = (state = [], action) => {
   }
 }
 
-export const addTeachers = (data) => {
+const addTeachers = (data) => {
   return {
     type: ADD_TEACHERS, 
     data: data
@@ -17,9 +19,8 @@ export const addTeachers = (data) => {
 }
 
 export const fetchTeachers = () => {
-  console.log("fetch")
   return (dispatch) => {
-    console.log("metodi")
+    getTeachers().then(teachers => dispatch(addTeachers(teachers)))
   }
 }
 
