@@ -2,8 +2,6 @@ const ADD_TEACHERS = 'ADD_TEACHERS'
 
 const teachers = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TEACHER':
-      return state.concat(action.data) 
     case ADD_TEACHERS:
       return state.concat(action.data) 
     default:
@@ -18,5 +16,11 @@ export const addTeachers = (data) => {
   }
 }
 
+export const fetchTeachers = () => {
+  console.log("fetch")
+  return (dispatch) => {
+    console.log("metodi")
+  }
+}
 
 export default teachers

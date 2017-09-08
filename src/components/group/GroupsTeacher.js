@@ -37,13 +37,6 @@ class GroupsTeacher extends Component {
     const teacher = group.teachers.length>0 ? group.teachers[0] : {}
 
     const match = (t, input) => {
-
-      // a hack fixing a bit unknown bug appearing in teacher selection
-      // that happens after teacher removal
-      if (t.nimi === undefined) {
-        return false
-      }
-
       return t.nimi.toLowerCase().indexOf(input.toLowerCase())>-1
     }
 
