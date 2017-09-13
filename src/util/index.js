@@ -1,1 +1,3 @@
-export {availableRooms} from './reservationUtil'
+export {
+  availableRooms, differenceInWeeks, finnishDayOfDate, dayOfDate
+} from './reservationUtil'

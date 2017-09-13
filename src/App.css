@@ -22,3 +22,59 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.field--button {
+  padding: 5px;
+}
+
+.field__label50 {
+  padding: 5px;
+  width: 50px;
+  display: inline-block;
+}
+
+.field__label100 {
+  padding: 5px;
+  width: 100px;
+  display: inline-block;
+}
+
+.field__label155 {
+  padding: 5px;
+  width: 150px;
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+} 
+
+.padded {
+  padding-right: 10px;
+  width: 180px;
+  display: inline-block;
+} 
+
+.button__padded {
+  width: 80px;
+  display: inline-block;
+} 
+
+.hpadded {
+  margin-top: 2px;
+} 
+
+.hpadded5 {
+  margin-top: 5px;
+} 
+
+.hpadded10 {
+  margin-top: 5px;
+  marker-end: 5px;
+} 
+
+.hpadded20 {
+  margin-top: 15px;
+  marker-end: 15px;
+} 

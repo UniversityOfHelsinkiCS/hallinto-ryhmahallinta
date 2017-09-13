@@ -10,6 +10,17 @@ export const GroupRow = ({course, group}) => {
     return group.teachers.map(t=>t.nimi).join(', ')
   }
   
+  const groupTime = () => {
+    if ( group.nro === 1) {
+      return (<div>jono</div>)
+    }
+    return (
+      <div>
+        {group.alkaa} - {group.loppuu}
+      </div>
+    )
+  }
+
   return(
     <tr>
       <td>
@@ -19,7 +30,7 @@ export const GroupRow = ({course, group}) => {
         {group.pva}
       </td>       
       <td>
-        {group.alkaa} - {group.loppuu}
+        {groupTime()}
       </td>      
       <td>
         {group.sali_nro}

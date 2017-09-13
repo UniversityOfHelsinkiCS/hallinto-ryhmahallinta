@@ -9,6 +9,13 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import store from './store'
 
+/*
+import {assignTeacherToGroup} from './services'
+assignTeacherToGroup({
+    htunnus: "RAJANI_C",
+  }, 'CSM11002-2017-S-1',1)
+*/
+
 ReactDOM.render(
   <HashRouter>
     <Provider store={store}>

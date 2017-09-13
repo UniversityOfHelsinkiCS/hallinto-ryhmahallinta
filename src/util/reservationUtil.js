@@ -2,15 +2,11 @@ const moment = require('moment')
 
 const doNotIntersect = (reservedTime, need) => {
 
-  //console.log(need.ends, reservedTime.alkamisaika, need.ends <= reservedTime.alkamisaika)
   if ( need.ends <= reservedTime.alkamisaika ) {
-    //console.log("*")
     return true
   }
 
-  //console.log(need.ends, reservedTime.alkamisaika, need.starts >= reservedTime.paattymisaika)
   if ( need.starts >= reservedTime.paattymisaika ) {
-    //console.log("**")
     return true
   }
 
@@ -20,17 +16,11 @@ const doNotIntersect = (reservedTime, need) => {
   const reservationStarts = moment(reservedTime['alkamis_pvm'], 'YYYY-MM-DD') 
   const reservationEnds = moment(reservedTime['paattymis_pvm'], 'YYYY-MM-DD') 
 
-  // time of day intersect
-
-  //console.log(needStarts.isAfter(reservationEnds) )
   if ( needStarts.isAfter(reservationEnds) ) {
-    //console.log("**")
     return true
   }
 
-  //console.log(needEnds.isBefore(reservationStarts))
   if ( needEnds.isBefore(reservationStarts) ) {
-    //console.log("****")
     return true
   }
 
@@ -47,5 +37,27 @@ const roomFree = (reservationsOfRoom, need) => {
 }
 
 export const availableRooms = (reservations, need) => {
-  return Object.keys(reservations).filter( key => roomFree(reservations[key], need) )
+  return Object.keys(reservations)
+          .filter( key => roomFree(reservations[key], need) )
+          //.filter( room => ['A319', 'A307'].indexOf(room)!==-1) 
 }
+
+export const differenceInWeeks = (ends, starts) => {
+  const startDate = moment(starts, 'YYYY-MM-DD')
+  const endDate = moment(ends, 'YYYY-MM-DD')
+
+  return (endDate.isoWeeks() - startDate.isoWeeks()) + 1
+}  
+
+export const dayOfDate = (date) => {
+  const days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  const dateObject = new Date(date)
+  return days[dateObject.getDay()]
+}
+
+export const finnishDayOfDate = (date) => {
+  const days = ["", "MA", "TI", "KE", "TO", "PE"]
+  const dateObject = new Date(date)
+  return days[dateObject.getDay()]
+}
+
