@@ -54,6 +54,7 @@ const addReservation = (data) => {
 
 export const addReservationForGroup = (data) => {
   return (dispatch) => {
+    
     reserveRoomForGroup(data)
       .then(teachers => dispatch(addReservation(data)))
   }
