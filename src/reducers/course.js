@@ -32,17 +32,23 @@ const courses = (state = [], action) => {
       return coursesExcept(state, course_id).concat(modifiedCourse)   
     }
     case ADD_RESERVATION_FOR_GROUP:
-      const {room, course_id, group_nro} = action.data
+      const {course_id, group_nro} = action.data
+      const reservation = action.data
 
       let modifiedCourse = courseWith(state, course_id)
       let group = modifiedCourse.groups.find(g => g.nro===group_nro)
 
-      group.alkaa = action.data.alkaa
-      group.loppuu = action.data.loppuu
-      group.pva = action.data.pva
-      group.alkamis_pvm = action.data.alkamis_pvm
-      group.paattymis_pvm = action.data.paattymis_pvm
-      group.sali_nro = action.data.sali_nro
+
+      const new_reservation = {
+        alkaa: reservation.alkaa,
+        loppuu: reservation.loppuu,
+        pva: reservation.pva,
+        alkamis_pvm: reservation.alkamis_pvm,
+        paattymis_pvm: reservation.paattymis_pvm,
+        sali_nro: reservation.sali_nro
+      } 
+
+      group.times.push(new_reservation)
 
       return coursesExcept(state, course_id).concat(modifiedCourse)   
     default:

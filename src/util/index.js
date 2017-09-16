@@ -1,3 +1,3 @@
 export {
-  availableRooms, differenceInWeeks, finnishDayOfDate, dayOfDate
+  availableRooms, differenceInWeeks, finnishDayOfDate, dayOfDate, dateAfterWeeks
 } from './reservationUtil'

@@ -11,9 +11,15 @@ class GroupsTeacher extends Component {
     if (group.paattymis_pvm===null || group.alkamis_pvm===null) {
       return 0
     }
-    const weeks = differenceInWeeks(group.paattymis_pvm, group.alkamis_pvm)  
-    const hours = group.loppuu - group.alkaa
-    return weeks*hours
+    
+    const hours = group.times.map( time => {
+      const weeks = differenceInWeeks(time.paattymis_pvm, time.alkamis_pvm)  
+      const hours = time.loppuu - time.alkaa
+      return weeks*hours     
+    })
+
+
+    return hours.reduce((sum, h) => sum+h, 0)
   }
 
   constructor(props){

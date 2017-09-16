@@ -43,7 +43,7 @@ export const availableRooms = (reservations, need) => {
 }
 
 export const differenceInWeeks = (ends, starts) => {
-  const startDate = moment(starts, 'YYYY-MM-DD')
+  const startDate = moment(starts, 'YYYY-MM-DD')  
   const endDate = moment(ends, 'YYYY-MM-DD')
 
   return (endDate.isoWeeks() - startDate.isoWeeks()) + 1
@@ -61,3 +61,9 @@ export const finnishDayOfDate = (date) => {
   return days[dateObject.getDay()]
 }
 
+const p = (v) => v<10 ? `0${v}`: v
+
+export const dateAfterWeeks = (date, weeks=1) => {
+  const endDate = moment(date, 'YYYY-MM-DD').add(weeks-1, 'weeks')
+  return `${endDate.year()}-${p(endDate.month()+1)}-${p(endDate.date())}` 
+}
