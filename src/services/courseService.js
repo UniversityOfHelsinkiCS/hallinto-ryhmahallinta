@@ -1,7 +1,8 @@
-import {baseUrl} from './index'
+import { baseUrl, withToken } from './index'
 
 export const getAllCourses = () => {
-  return fetch(`${baseUrl}/courses`)
+  const url = `${baseUrl}/courses`
+  return fetch(withToken(url))
     .then( response => response.json())  
 }
 
@@ -10,7 +11,7 @@ export const assignTeacherToGroup = (who, course_id, group_nro) => {
   const body = {
     who: who,
   }
-  return fetch(url, {
+  return fetch(withToken(url), {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -23,7 +24,7 @@ export const assignTeacherToGroup = (who, course_id, group_nro) => {
 
 export const unassignTeacherFromGroup = (who, course_id, group_nro) => {
   const url = `${baseUrl}/courses/${course_id}/groups/${group_nro}/teachers/${who}`
-  return fetch(url, {
+  return fetch(withToken(url), {
       method: 'post',
       headers: {
         'Accept': 'application/json'

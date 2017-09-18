@@ -1,6 +1,7 @@
-import {baseUrl} from './index'
+import { baseUrl, withToken } from './index'
 
 export const getTeachers = () => {
-  return fetch(`${baseUrl}/teachers`)
+  const url = `${baseUrl}/teachers`
+  return fetch(withToken(url))
     .then( response => response.json())  
 }

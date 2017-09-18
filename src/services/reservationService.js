@@ -1,13 +1,14 @@
-import {baseUrl} from './index'
+import { baseUrl, withToken } from './index'
 
 export const getReservations = () => {
-  return fetch(`${baseUrl}/reservations`)
+  const url = `${baseUrl}/reservations`
+  return fetch(withToken(url))
     .then( response => response.json())  
 }
 
 export const reserveRoomForGroup = (data) => {
   const url = `${baseUrl}/reservations`
-  return fetch(url, {
+  return fetch(withToken(url), {
       method: 'post',
       headers: {
         'Accept': 'application/json',
